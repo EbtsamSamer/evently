@@ -1,20 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:evently/screens/event/edit_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../firebase/firebase_manager.dart';
-import '../../models/event_model.dart';
 
 class EventDetails extends StatelessWidget {
   static const String routeName = "EventDetails";
 
   EventDetails({super.key});
   String? category;
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +20,6 @@ class EventDetails extends StatelessWidget {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return Center(child: CircularProgressIndicator(color: Colors.blue));
     }
-    // var date = DateTime.fromMillisecondsSinceEpoch(
-    //   snapshot.data!.docs[index].data().date,
-    // );
-   // String month = DateFormat('MMM').format(date);
     return Scaffold(
           appBar: AppBar(
             title: Row(
@@ -83,7 +75,7 @@ class EventDetails extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 65,
+                  height: MediaQuery.sizeOf(context).height*0.07,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
@@ -131,7 +123,7 @@ class EventDetails extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 65,
+                  height: MediaQuery.sizeOf(context).height*0.07,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(

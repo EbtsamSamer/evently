@@ -15,9 +15,9 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  int selectedImageIndex = 0;
+
   int selectedCategoryIndex = 0;
-  List<String> images = [
+  List<String> categories = [
     "eating",
     "birthday",
     "bookclub",
@@ -29,21 +29,11 @@ class _CreateEventState extends State<CreateEvent> {
     "workshop",
   ];
 
-  List<String> categories = [
-    "Eating",
-    "Birthday",
-    "BookClub",
-    "Exhibition",
-    "Gaming",
-    "Holiday",
-    "Meeting",
-    "Sport",
-    "Workshop",
-  ];
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  DateTime selectedDate = DateTime.now(); //default
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime =TimeOfDay.now(); //default
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +56,7 @@ class _CreateEventState extends State<CreateEvent> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
-                  "assets/images/${images[selectedImageIndex]}.png",
+                  "assets/images/${categories[selectedCategoryIndex]}.png",
                 ),
               ),
               SizedBox(height: 16),
@@ -79,7 +69,6 @@ class _CreateEventState extends State<CreateEvent> {
                     return GestureDetector(
                       onTap: () {
                         setState(() {
-                          selectedImageIndex = index;
                           selectedCategoryIndex = index;
                         });
                       },
@@ -218,6 +207,38 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ],
               ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.access_time),
+                      SizedBox(width: 8),
+                      Text(
+                        "Event Time",
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      selectTime();
+                    },
+                    child: Text(
+                      selectedTime.toString(),
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Color(0xFF5669FF),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 16),
               Container(
                 alignment: Alignment.topLeft,
@@ -291,6 +312,18 @@ class _CreateEventState extends State<CreateEvent> {
     );
     if (choosenDate != null) {
       selectedDate = choosenDate;
+      setState(() {
+
+      });
+    }
+  }
+  selectTime() async {
+    TimeOfDay? choosenTime = await showTimePicker(
+        initialTime: selectedTime,
+        context: context,
+    );
+    if (choosenTime != null) {
+      selectedTime = choosenTime;
       setState(() {
 
       });

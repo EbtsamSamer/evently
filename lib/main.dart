@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
         debugShowCheckedModeBanner: false,
         home: HomeScreen(),
-        initialRoute:HomeScreen.routeName,
+        initialRoute:IntroductionScreen.routeName,
         //userProvider.firebaseUser!=null? HomeScreen.routeName:IntroductionScreen.routeName,
         routes: {
           IntroductionScreen.routeName: (_) => IntroductionScreen(),
