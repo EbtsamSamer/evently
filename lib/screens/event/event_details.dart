@@ -12,9 +12,6 @@ class EventDetails extends StatelessWidget {
   EventDetails({super.key});
   String? category;
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -23,10 +20,6 @@ class EventDetails extends StatelessWidget {
     if (snapshot.connectionState == ConnectionState.waiting) {
       return Center(child: CircularProgressIndicator(color: Colors.blue));
     }
-    // var date = DateTime.fromMillisecondsSinceEpoch(
-    //   snapshot.data!.docs[index].data().date,
-    // );
-   // String month = DateFormat('MMM').format(date);
     return Scaffold(
           appBar: AppBar(
             title: Row(
@@ -82,7 +75,7 @@ class EventDetails extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 65,
+                  height: MediaQuery.sizeOf(context).height*0.07,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
@@ -130,7 +123,7 @@ class EventDetails extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 65,
+                  height: MediaQuery.sizeOf(context).height*0.07,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(

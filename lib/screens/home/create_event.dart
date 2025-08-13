@@ -32,7 +32,8 @@ class _CreateEventState extends State<CreateEvent> {
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   var formKey = GlobalKey<FormState>();
-  DateTime selectedDate = DateTime.now(); //default
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime =TimeOfDay.now(); //default
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,10 +213,10 @@ class _CreateEventState extends State<CreateEvent> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.calendar_month_outlined),
+                      Icon(Icons.access_time),
                       SizedBox(width: 8),
                       Text(
-                        "Event Date",
+                        "Event Time",
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -225,10 +226,10 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      selectDate();
+                      selectTime();
                     },
                     child: Text(
-                      selectedDate.toString().substring(0, 10),
+                      selectedTime.toString(),
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
@@ -311,6 +312,18 @@ class _CreateEventState extends State<CreateEvent> {
     );
     if (choosenDate != null) {
       selectedDate = choosenDate;
+      setState(() {
+
+      });
+    }
+  }
+  selectTime() async {
+    TimeOfDay? choosenTime = await showTimePicker(
+        initialTime: selectedTime,
+        context: context,
+    );
+    if (choosenTime != null) {
+      selectedTime = choosenTime;
       setState(() {
 
       });

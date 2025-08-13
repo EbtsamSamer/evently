@@ -11,8 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 class EventTab extends StatelessWidget {
   String category;
 
-  EventTab({super.key, required this.category});
 
+  EventTab({super.key, required this.category});
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<TaskModel>>(
@@ -45,16 +45,19 @@ class EventTab extends StatelessWidget {
               String month = DateFormat('MMM').format(date);
               return InkWell(
                 onTap: () {
-
-                  Navigator.pushNamed(context,EditEvent.routeName,arguments: snapshot.data?.docs[index].data());
+                  Navigator.pushNamed(
+                    context,
+                    EditEvent.routeName,
+                    arguments: snapshot.data?.docs[index].data(),
+                  );
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16.r),
                   ),
                   child: Container(
-                    height: MediaQuery.sizeOf(context).height*0.23,
-                    padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+                    height: MediaQuery.sizeOf(context).height * 0.23,
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25.r),
                       image: DecorationImage(
