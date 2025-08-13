@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently/firebase/firebase_manager.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/screens/event/edit_event.dart';
 import 'package:evently/screens/event/event_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,17 +43,20 @@ class EventTab extends StatelessWidget {
                 snapshot.data!.docs[index].data().date,
               );
               String month = DateFormat('MMM').format(date);
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, EventDetails.routeName  , arguments: snapshot.data!.docs[index].data(),);
-                  },
+              return InkWell(
+                onTap: () {
+
+                  Navigator.pushNamed(context,EditEvent.routeName,arguments: snapshot.data?.docs[index].data());
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
                   child: Container(
-                    height: 203,
+                    height: MediaQuery.sizeOf(context).height*0.23,
+                    padding: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25.r),
                       image: DecorationImage(
                         image: AssetImage(
                           "assets/images/${snapshot.data?.docs[index].data().category}.png",
@@ -104,7 +108,7 @@ class EventTab extends StatelessWidget {
                           ),
                           child: ListTile(
                             title: Text(
-                              "${snapshot.data?.docs[index].data().title ?? ""}",
+                              "${snapshot.data!.docs[index].data().title ?? ""}",
                             ),
                             trailing: InkWell(
                               onTap: () {

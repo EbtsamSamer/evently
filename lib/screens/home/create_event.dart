@@ -15,9 +15,9 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
-  int selectedImageIndex = 0;
+
   int selectedCategoryIndex = 0;
-  List<String> images = [
+  List<String> categories = [
     "eating",
     "birthday",
     "bookclub",
@@ -29,17 +29,6 @@ class _CreateEventState extends State<CreateEvent> {
     "workshop",
   ];
 
-  List<String> categories = [
-    "Eating",
-    "Birthday",
-    "BookClub",
-    "Exhibition",
-    "Gaming",
-    "Holiday",
-    "Meeting",
-    "Sport",
-    "Workshop",
-  ];
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   var formKey = GlobalKey<FormState>();
@@ -66,7 +55,7 @@ class _CreateEventState extends State<CreateEvent> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
-                  "assets/images/${images[selectedImageIndex]}.png",
+                  "assets/images/${categories[selectedCategoryIndex]}.png",
                 ),
               ),
               SizedBox(height: 16),
@@ -79,7 +68,6 @@ class _CreateEventState extends State<CreateEvent> {
                     return GestureDetector(
                       onTap: () {
                         setState(() {
-                          selectedImageIndex = index;
                           selectedCategoryIndex = index;
                         });
                       },
@@ -187,6 +175,38 @@ class _CreateEventState extends State<CreateEvent> {
                 ),
               ),
               SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_month_outlined),
+                      SizedBox(width: 8),
+                      Text(
+                        "Event Date",
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      selectDate();
+                    },
+                    child: Text(
+                      selectedDate.toString().substring(0, 10),
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Color(0xFF5669FF),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

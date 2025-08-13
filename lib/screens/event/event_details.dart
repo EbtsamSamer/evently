@@ -1,11 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
+
 import 'package:evently/screens/event/edit_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../firebase/firebase_manager.dart';
-import '../../models/event_model.dart';
 
 class EventDetails extends StatelessWidget {
   static const String routeName = "EventDetails";

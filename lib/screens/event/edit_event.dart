@@ -17,11 +17,11 @@ class EditEvent extends StatefulWidget {
 }
 
 class _EditEventState extends State<EditEvent> {
-  int selectedImageIndex = 0;
+
 
   int selectedCategoryIndex = 0;
 
-  List<String> images = [
+  List<String> categories = [
     "eating",
     "birthday",
     "bookclub",
@@ -33,26 +33,23 @@ class _EditEventState extends State<EditEvent> {
     "workshop",
   ];
 
-  List<String> categories = [
-    "Eating",
-    "Birthday",
-    "BookClub",
-    "Exhibition",
-    "Gaming",
-    "Holiday",
-    "Meeting",
-    "Sport",
-    "Workshop",
-  ];
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   DateTime selectedDate = DateTime.now();
 
-  late TaskModel event;
+   TaskModel? event;
   @override
   Widget build(BuildContext context) {
+      if(event == null){
+         event=ModalRoute.of(context)?.settings.arguments as TaskModel;
+         selectedCategoryIndex=categories.indexOf(event?.category??categories.first);
+         titleController.text=event?.title??" ";
+         descriptionController.text=event?.description??" ";
+         DateTime date=DateTime.fromMicrosecondsSinceEpoch(event?.date??0);
+         selectedDate=DateTime(date.year,date.month,date.day);
 
+      }
       return Scaffold(
         appBar: AppBar(
           title: Text("Edit Event",
@@ -70,7 +67,7 @@ class _EditEventState extends State<EditEvent> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
-                    "assets/images/${images[selectedImageIndex]}.png",
+                    "assets/images/${categories[selectedCategoryIndex]}.png",
                   ),
                 ),
                 SizedBox(height: 16),
@@ -82,7 +79,6 @@ class _EditEventState extends State<EditEvent> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          selectedImageIndex = index;
                           selectedCategoryIndex = index;
                           setState(() {});
                         },
@@ -287,7 +283,18 @@ class _EditEventState extends State<EditEvent> {
                       ),
                     ),
                     onPressed: () {
+                      TaskModel task= TaskModel(
+                          id:event?.id??" ",
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          title: titleController.text,
+                          description: descriptionController.text,
+                          date: selectedDate.millisecondsSinceEpoch,
+                          category: categories[selectedCategoryIndex]);
+                      FirebaseManager.updateEvent(task).then((value){
+                        Navigator.pop(context);
+                      }
 
+                      );
 
                     },
                     child: Text(
@@ -333,20 +340,6 @@ class _EditEventState extends State<EditEvent> {
       setState(() {
 
       });
-    }
-  }
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final args = ModalRoute.of(context)!.settings.arguments;
-    if (args is TaskModel) {
-      event = args;
-      titleController.text = event.title;
-      descriptionController.text = event.description;
-      selectedDate = DateTime.fromMillisecondsSinceEpoch(event.date);
-      selectedCategoryIndex = categories.indexOf(event.category);
-      selectedImageIndex = images.indexOf(event.category);
     }
   }
 
